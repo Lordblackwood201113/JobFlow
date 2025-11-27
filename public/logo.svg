@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 100 100">
+  <defs>
+    <linearGradient id="grad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#8B5CF6;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#6D28D9;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <!-- Background circle -->
+  <circle cx="50" cy="50" r="48" fill="url(#grad)"/>
+  <!-- Briefcase icon -->
+  <g fill="white">
+    <!-- Main briefcase body -->
+    <rect x="25" y="40" width="50" height="35" rx="4" ry="4"/>
+    <!-- Top handle area -->
+    <path d="M35,40 L35,32 Q35,28 39,28 L61,28 Q65,28 65,32 L65,40"/>
+    <!-- Handle -->
+    <rect x="45" y="50" width="10" height="4" rx="2" ry="2"/>
+    <!-- Lock detail -->
+    <circle cx="50" cy="58" r="3" fill="#8B5CF6"/>
+  </g>
+</svg>

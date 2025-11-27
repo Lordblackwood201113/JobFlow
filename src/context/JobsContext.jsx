@@ -23,6 +23,7 @@ export const JobsProvider = ({ children }) => {
     contractType: '',
     workType: '',
     search: '',
+    favorites: false,
   });
 
   /**
@@ -52,7 +53,15 @@ export const JobsProvider = ({ children }) => {
         showToast.error('Erreur lors du chargement des candidatures');
         setJobs([]);
       } else {
-        setJobs(data || []);
+        // Trier les jobs : favoris en premier, puis par date de candidature (plus récent en premier)
+        const sortedJobs = (data || []).sort((a, b) => {
+          // D'abord trier par favoris
+          if (a.is_favorite && !b.is_favorite) return -1;
+          if (!a.is_favorite && b.is_favorite) return 1;
+          // Ensuite trier par date de candidature (plus récent en premier)
+          return new Date(b.date_applied) - new Date(a.date_applied);
+        });
+        setJobs(sortedJobs);
       }
     } catch (error) {
       clearTimeout(timeoutId);
@@ -239,6 +248,7 @@ export const JobsProvider = ({ children }) => {
       contractType: '',
       workType: '',
       search: '',
+      favorites: false,
     });
   };
 

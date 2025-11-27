@@ -2,7 +2,7 @@ import Select from '../atoms/Select';
 
 const FilterGroup = ({ filters, onFilterChange, className = '' }) => {
   return (
-    <div className={`grid grid-cols-1 md:grid-cols-3 gap-4 ${className}`}>
+    <div className={`grid grid-cols-1 md:grid-cols-4 gap-4 ${className}`}>
       <Select
         label="Statut"
         value={filters.status || ''}
@@ -40,6 +40,16 @@ const FilterGroup = ({ filters, onFilterChange, className = '' }) => {
           { value: 'onsite', label: 'Sur site' },
         ]}
         placeholder="Tous les types"
+      />
+
+      <Select
+        label="Favoris"
+        value={filters.favorites ? 'true' : ''}
+        onChange={(e) => onFilterChange('favorites', e.target.value === 'true')}
+        options={[
+          { value: 'true', label: 'Favoris uniquement' },
+        ]}
+        placeholder="Tous"
       />
     </div>
   );

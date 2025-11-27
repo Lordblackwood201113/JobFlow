@@ -26,6 +26,9 @@ const jobsService = {
       if (options.workType) {
         query = query.eq('work_type', options.workType);
       }
+      if (options.favorites) {
+        query = query.eq('is_favorite', true);
+      }
       if (options.search) {
         query = query.or(
           `company_name.ilike.%${options.search}%,position_title.ilike.%${options.search}%`

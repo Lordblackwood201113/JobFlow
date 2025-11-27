@@ -193,7 +193,7 @@ const Dashboard = () => {
                   <Filter className="h-5 w-5 mr-2" />
                   Filtres
                 </Button>
-                {(filters.status || filters.contractType || filters.workType) && (
+                {(filters.status || filters.contractType || filters.workType || filters.favorites) && (
                   <Button variant="ghost" onClick={handleResetFilters}>
                     <X className="h-5 w-5 mr-2" />
                     Réinitialiser
