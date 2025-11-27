@@ -46,15 +46,34 @@ export const AuthProvider = ({ children }) => {
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, currentSession) => {
         console.log('Auth state changed:', event);
+
+        // Gérer les erreurs de refresh token
+        if (event === 'TOKEN_REFRESHED') {
+          console.log('Token refreshed successfully');
+        } else if (event === 'SIGNED_OUT') {
+          console.log('User signed out');
+          setSession(null);
+          setUser(null);
+          setProfile(null);
+          setLoading(false);
+          return;
+        } else if (event === 'USER_UPDATED') {
+          console.log('User updated');
+        }
+
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
 
         if (currentSession?.user) {
           // Charger le profil utilisateur
-          const { data: profileData } = await authService.getProfile(
-            currentSession.user.id
-          );
-          setProfile(profileData);
+          try {
+            const { data: profileData } = await authService.getProfile(
+              currentSession.user.id
+            );
+            setProfile(profileData);
+          } catch (error) {
+            console.error('Erreur lors du chargement du profil:', error);
+          }
         } else {
           setProfile(null);
         }

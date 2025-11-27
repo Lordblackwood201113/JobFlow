@@ -29,7 +29,7 @@ export const JobsProvider = ({ children }) => {
   /**
    * Charger les candidatures
    */
-  const loadJobs = async () => {
+  const loadJobs = async (signal) => {
     if (!user) {
       setJobs([]);
       setLoading(false);
@@ -40,12 +40,21 @@ export const JobsProvider = ({ children }) => {
 
     // Timeout de 10 secondes pour éviter le chargement infini
     const timeoutId = setTimeout(() => {
-      setLoading(false);
-      showToast.error('Le chargement prend trop de temps. Veuillez rafraîchir la page.');
+      if (!signal || !signal.aborted) {
+        setLoading(false);
+        showToast.error('Le chargement prend trop de temps. Veuillez rafraîchir la page.');
+      }
     }, 10000);
 
     try {
       const { data, error } = await jobsService.getAllJobs(user.id, filters);
+
+      // Si la requête a été annulée, ne pas mettre à jour l'état
+      if (signal && signal.aborted) {
+        clearTimeout(timeoutId);
+        return;
+      }
+
       clearTimeout(timeoutId);
 
       if (error) {
@@ -65,11 +74,16 @@ export const JobsProvider = ({ children }) => {
       }
     } catch (error) {
       clearTimeout(timeoutId);
+      // Ne pas afficher d'erreur si c'est une annulation
+      if (signal && signal.aborted) return;
+
       console.error('Exception chargement jobs:', error);
       showToast.error('Erreur lors du chargement des candidatures');
       setJobs([]);
     } finally {
-      setLoading(false);
+      if (!signal || !signal.aborted) {
+        setLoading(false);
+      }
     }
   };
 
@@ -110,8 +124,14 @@ export const JobsProvider = ({ children }) => {
    */
   useEffect(() => {
     if (user) {
-      loadJobs();
+      const abortController = new AbortController();
+      loadJobs(abortController.signal);
       loadStats();
+
+      // Cleanup: annuler la requête si le composant unmount ou les filtres changent
+      return () => {
+        abortController.abort();
+      };
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user, filters]);
@@ -210,14 +230,10 @@ export const JobsProvider = ({ children }) => {
    * Basculer le favori
    */
   const toggleFavorite = async (jobId, isFavorite) => {
+    // Sauvegarder l'état précédent pour rollback en cas d'erreur
+    const previousJobs = jobs;
+
     try {
-      const { error } = await jobsService.toggleFavorite(jobId, isFavorite);
-
-      if (error) {
-        showToast.error('Erreur lors de la mise à jour');
-        return { error };
-      }
-
       // Mise à jour optimiste
       setJobs((prevJobs) =>
         prevJobs.map((job) =>
@@ -225,8 +241,19 @@ export const JobsProvider = ({ children }) => {
         )
       );
 
+      const { error } = await jobsService.toggleFavorite(jobId, isFavorite);
+
+      if (error) {
+        // Rollback en cas d'erreur
+        setJobs(previousJobs);
+        showToast.error('Erreur lors de la mise à jour');
+        return { error };
+      }
+
       return { error: null };
     } catch (error) {
+      // Rollback en cas d'erreur
+      setJobs(previousJobs);
       showToast.error('Erreur lors de la mise à jour');
       return { error };
     }

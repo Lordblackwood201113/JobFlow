@@ -107,8 +107,10 @@ const JobCard = ({ job, onEdit, onDelete, onToggleFavorite }) => {
           size="sm"
           onClick={() => onDelete(job.id)}
           className="text-red-600 hover:bg-red-50"
+          aria-label={`Supprimer la candidature chez ${job.company_name}`}
+          title="Supprimer"
         >
-          <Trash2 className="h-4 w-4" />
+          <Trash2 className="h-4 w-4" aria-hidden="true" />
         </Button>
       </div>
     </Card>

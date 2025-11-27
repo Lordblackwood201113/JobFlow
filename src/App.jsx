@@ -5,6 +5,7 @@ import ProtectedRoute from './components/ProtectedRoute';
 import Landing from './pages/Landing';
 import Login from './pages/Login';
 import Register from './pages/Register';
+import AuthCallback from './pages/AuthCallback';
 import Dashboard from './pages/Dashboard';
 import JobDetails from './pages/JobDetails';
 import Profile from './pages/Profile';
@@ -42,6 +43,7 @@ function App() {
           path="/register"
           element={user ? <Navigate to="/dashboard" replace /> : <Register />}
         />
+        <Route path="/auth/callback" element={<AuthCallback />} />
 
         {/* Routes protégées */}
         <Route

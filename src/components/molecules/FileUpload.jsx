@@ -87,9 +87,10 @@ const FileUpload = ({ onFileSelect, uploading, progress }) => {
           onChange={handleChange}
           accept=".pdf,.doc,.docx,.txt"
           disabled={uploading}
+          aria-label="Sélectionner un fichier à uploader"
         />
 
-        <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" />
+        <Upload className="mx-auto h-12 w-12 text-gray-400 mb-4" aria-hidden="true" />
 
         <p className="text-sm text-gray-600 mb-2">
           <button
@@ -97,6 +98,7 @@ const FileUpload = ({ onFileSelect, uploading, progress }) => {
             onClick={() => inputRef.current?.click()}
             className="text-[#8B5CF6] font-medium hover:underline"
             disabled={uploading}
+            aria-label="Cliquez pour sélectionner un fichier"
           >
             Cliquez pour sélectionner
           </button>{' '}

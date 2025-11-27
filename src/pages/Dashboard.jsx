@@ -1,8 +1,9 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Plus, Send, Briefcase, CheckCircle, Filter, X, FileText, BarChart3, Briefcase as BriefcaseIcon } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useJobs } from '../context/JobsContext';
 import useConfirm from '../hooks/useConfirm';
+import useDebounce from '../hooks/useDebounce';
 import Button from '../components/atoms/Button';
 import Modal from '../components/ui/Modal';
 import ConfirmDialog from '../components/ui/ConfirmDialog';
@@ -36,6 +37,16 @@ const Dashboard = () => {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [showFilters, setShowFilters] = useState(false);
   const [activeTab, setActiveTab] = useState('applications'); // 'applications' ou 'stats'
+  const [searchTerm, setSearchTerm] = useState(filters.search || '');
+
+  // Debounce de la recherche pour éviter trop de requêtes
+  const debouncedSearchTerm = useDebounce(searchTerm, 300);
+
+  // Mettre à jour le filtre search quand le terme debouncé change
+  useEffect(() => {
+    updateFilters('search', debouncedSearchTerm);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [debouncedSearchTerm]);
 
   const handleOpenModal = (job = null) => {
     setEditingJob(job);
@@ -76,7 +87,7 @@ const Dashboard = () => {
   };
 
   const handleSearchChange = (value) => {
-    updateFilters('search', value);
+    setSearchTerm(value);
   };
 
   const handleFilterChange = (key, value) => {
@@ -85,6 +96,7 @@ const Dashboard = () => {
 
   const handleResetFilters = () => {
     resetFilters();
+    setSearchTerm('');
     setShowFilters(false);
   };
 
@@ -181,7 +193,7 @@ const Dashboard = () => {
               <div className="flex items-center gap-3">
                 <div className="flex-1">
                   <SearchBar
-                    value={filters.search}
+                    value={searchTerm}
                     onChange={handleSearchChange}
                     placeholder="Rechercher par entreprise ou poste..."
                   />

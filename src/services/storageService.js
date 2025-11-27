@@ -80,7 +80,11 @@ const storageService = {
         .select()
         .single();
 
-      if (docError) throw docError;
+      // Si l'insertion BD échoue, supprimer le fichier uploadé (rollback)
+      if (docError) {
+        await supabase.storage.from(BUCKET_NAME).remove([filePath]);
+        throw docError;
+      }
 
       return { data: docData, error: null };
     } catch (error) {

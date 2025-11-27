@@ -87,14 +87,33 @@ const JobForm = ({ job, onSubmit, onCancel, loading }) => {
       newErrors.contact_email = 'Email invalide';
     }
 
+    // Validation des salaires
+    if (formData.salary_min && formData.salary_max) {
+      const salaryMin = parseInt(formData.salary_min);
+      const salaryMax = parseInt(formData.salary_max);
+      if (salaryMin > salaryMax) {
+        newErrors.salary_max = 'Le salaire maximum doit être supérieur ou égal au salaire minimum';
+      }
+    }
+
+    // Validation des dates
+    if (formData.date_interview && formData.date_applied) {
+      const dateApplied = new Date(formData.date_applied);
+      const dateInterview = new Date(formData.date_interview);
+      if (dateInterview < dateApplied) {
+        newErrors.date_interview = 'La date d\'entretien doit être postérieure à la date de candidature';
+      }
+    }
+
     setErrors(newErrors);
     return Object.keys(newErrors).length === 0;
   };
 
   const isValidUrl = (string) => {
     try {
-      new URL(string);
-      return true;
+      const url = new URL(string);
+      // N'accepter que les protocoles HTTP et HTTPS pour éviter les XSS
+      return ['http:', 'https:'].includes(url.protocol);
     } catch {
       return false;
     }
