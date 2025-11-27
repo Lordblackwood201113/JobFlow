@@ -36,16 +36,29 @@ export const JobsProvider = ({ children }) => {
     }
 
     setLoading(true);
+
+    // Timeout de 10 secondes pour éviter le chargement infini
+    const timeoutId = setTimeout(() => {
+      setLoading(false);
+      showToast.error('Le chargement prend trop de temps. Veuillez rafraîchir la page.');
+    }, 10000);
+
     try {
       const { data, error } = await jobsService.getAllJobs(user.id, filters);
+      clearTimeout(timeoutId);
 
       if (error) {
+        console.error('Erreur chargement jobs:', error);
         showToast.error('Erreur lors du chargement des candidatures');
+        setJobs([]);
       } else {
         setJobs(data || []);
       }
-    } catch {
+    } catch (error) {
+      clearTimeout(timeoutId);
+      console.error('Exception chargement jobs:', error);
       showToast.error('Erreur lors du chargement des candidatures');
+      setJobs([]);
     } finally {
       setLoading(false);
     }
@@ -60,16 +73,26 @@ export const JobsProvider = ({ children }) => {
       return;
     }
 
+    // Timeout de 10 secondes
+    const timeoutId = setTimeout(() => {
+      console.warn('Timeout lors du chargement des stats');
+    }, 10000);
+
     try {
       const { data, error } = await jobsService.getStats(user.id);
+      clearTimeout(timeoutId);
 
       if (error) {
         console.error('Erreur lors du chargement des stats:', error);
+        // Ne pas bloquer l'app si les stats échouent
+        setStats(null);
       } else {
         setStats(data);
       }
     } catch (error) {
-      console.error('Erreur lors du chargement des stats:', error);
+      clearTimeout(timeoutId);
+      console.error('Exception lors du chargement des stats:', error);
+      setStats(null);
     }
   };
 
