@@ -1,7 +1,7 @@
 const Badge = ({ children, variant = 'default', size = 'md', className = '' }) => {
   const variants = {
     default: 'bg-gray-100 text-gray-700',
-    primary: 'bg-[#D8F26E] text-gray-900',
+    primary: 'bg-[#DBEAFE] text-gray-900',
     secondary: 'bg-purple-100 text-purple-700',
     success: 'bg-green-100 text-green-700',
     warning: 'bg-yellow-100 text-yellow-700',

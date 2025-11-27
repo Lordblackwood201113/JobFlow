@@ -88,7 +88,7 @@ const Login = () => {
   };
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#D8F26E] p-4">
+    <div className="min-h-screen flex items-center justify-center bg-[#DBEAFE] p-4">
       <Card className="w-full max-w-md">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold text-gray-900 mb-2">

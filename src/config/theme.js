@@ -2,7 +2,7 @@
 export const theme = {
   colors: {
     background: {
-      app: '#D8F26E',
+      app: '#DBEAFE',
       card: '#FFFFFF',
       tag: '#F3F4F6',
       input: '#FFFFFF'
@@ -11,12 +11,12 @@ export const theme = {
       primary: '#111827',
       secondary: '#6B7280',
       light: '#9CA3AF',
-      accent: '#D8F26E'
+      accent: '#DBEAFE'
     },
     brand: {
-      primary: '#D8F26E',
+      primary: '#DBEAFE',
       secondary: '#8B5CF6',
-      success: '#D8F26E',
+      success: '#DBEAFE',
       danger: '#EF4444'
     },
     status: {

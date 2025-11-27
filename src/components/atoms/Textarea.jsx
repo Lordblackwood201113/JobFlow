@@ -20,7 +20,7 @@ const Textarea = forwardRef(
 
     const textareaStyles = error
       ? 'border-red-500 focus:ring-red-500 focus:border-red-500'
-      : 'border-gray-300 focus:ring-[#D8F26E] focus:border-[#D8F26E]';
+      : 'border-gray-300 focus:ring-[#DBEAFE] focus:border-[#DBEAFE]';
 
     return (
       <div className={`flex flex-col gap-1.5 ${containerClassName}`}>

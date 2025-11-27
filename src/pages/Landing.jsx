@@ -48,9 +48,9 @@ const Landing = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#D8F26E]">
+    <div className="min-h-screen bg-[#DBEAFE]">
       {/* Header */}
-      <header className="sticky top-0 z-50 bg-[#D8F26E]/95 backdrop-blur-sm border-b border-gray-900/10">
+      <header className="sticky top-0 z-50 bg-[#DBEAFE]/95 backdrop-blur-sm border-b border-gray-900/10">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
@@ -192,7 +192,7 @@ const Landing = () => {
               </div>
             </div>
 
-            <div className="bg-gradient-to-br from-[#8B5CF6]/10 to-[#D8F26E]/20 rounded-[24px] p-8 flex items-center justify-center min-h-[300px]">
+            <div className="bg-gradient-to-br from-[#8B5CF6]/10 to-[#DBEAFE]/20 rounded-[24px] p-8 flex items-center justify-center min-h-[300px]">
               <BarChart3 className="h-48 w-48 text-[#8B5CF6]/30" />
             </div>
           </div>

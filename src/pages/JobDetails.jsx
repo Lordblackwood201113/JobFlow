@@ -177,7 +177,7 @@ const JobDetails = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center bg-[#D8F26E]">
+      <div className="min-h-screen flex items-center justify-center bg-[#DBEAFE]">
         <div className="text-center">
           <div className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-gray-900 border-r-transparent"></div>
           <p className="mt-4 text-gray-900 font-medium">Chargement...</p>
@@ -191,7 +191,7 @@ const JobDetails = () => {
   }
 
   return (
-    <div className="min-h-screen bg-[#D8F26E]">
+    <div className="min-h-screen bg-[#DBEAFE]">
       <div className="max-w-5xl mx-auto p-6">
         {/* Header */}
         <div className="mb-6">

@@ -72,7 +72,7 @@ const FileUpload = ({ onFileSelect, uploading, progress }) => {
       <div
         className={`relative border-2 border-dashed rounded-lg p-8 text-center transition-colors ${
           dragActive
-            ? 'border-[#D8F26E] bg-[#D8F26E]/10'
+            ? 'border-[#DBEAFE] bg-[#DBEAFE]/10'
             : 'border-gray-300 hover:border-gray-400'
         }`}
         onDragEnter={handleDrag}

@@ -19,7 +19,7 @@ const Button = forwardRef(
 
     const variants = {
       primary:
-        'bg-[#D8F26E] text-gray-900 hover:bg-[#c5e05b] focus:ring-[#D8F26E] shadow-sm',
+        'bg-[#DBEAFE] text-gray-900 hover:bg-[#c5e05b] focus:ring-[#DBEAFE] shadow-sm',
       secondary:
         'bg-[#8B5CF6] text-white hover:bg-[#7c3aed] focus:ring-[#8B5CF6] shadow-sm',
       outline:

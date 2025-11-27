@@ -106,7 +106,7 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#D8F26E]">
+    <div className="min-h-screen bg-[#DBEAFE]">
       <div className="max-w-4xl mx-auto p-6">
         {/* Header */}
         <div className="mb-6">
