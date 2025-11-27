@@ -1,18 +1,21 @@
 import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { ArrowLeft, Save, Key } from 'lucide-react';
+import { ArrowLeft, Save, Key, LogOut } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import profileService from '../services/profileService';
+import useConfirm from '../hooks/useConfirm';
 import Button from '../components/atoms/Button';
 import Input from '../components/atoms/Input';
 import Textarea from '../components/atoms/Textarea';
 import Card from '../components/ui/Card';
+import ConfirmDialog from '../components/ui/ConfirmDialog';
 import AvatarUpload from '../components/molecules/AvatarUpload';
 import showToast from '../lib/toast';
 
 const Profile = () => {
   const navigate = useNavigate();
-  const { user, profile, refreshProfile } = useAuth();
+  const { user, profile, refreshProfile, signOut } = useAuth();
+  const { confirm, confirmState, handleConfirm, handleCancel } = useConfirm();
 
   const [formData, setFormData] = useState({
     full_name: '',
@@ -103,6 +106,21 @@ const Profile = () => {
 
   const handleAvatarUpdated = async (updatedProfile) => {
     await refreshProfile();
+  };
+
+  const handleSignOut = async () => {
+    const confirmed = await confirm({
+      title: 'Déconnexion',
+      message: 'Êtes-vous sûr de vouloir vous déconnecter ?',
+      confirmText: 'Se déconnecter',
+      cancelText: 'Annuler',
+      variant: 'danger',
+    });
+
+    if (confirmed) {
+      await signOut();
+      navigate('/');
+    }
   };
 
   return (
@@ -303,8 +321,40 @@ const Profile = () => {
                 </div>
               </div>
             </Card>
+
+            {/* Déconnexion */}
+            <Card>
+              <h2 className="text-xl font-semibold text-gray-900 mb-4">
+                Déconnexion
+              </h2>
+
+              <p className="text-gray-600 mb-4">
+                Déconnectez-vous de votre compte Job Tracker
+              </p>
+
+              <Button
+                variant="outline"
+                onClick={handleSignOut}
+                className="text-red-600 border-red-600 hover:bg-red-50"
+              >
+                <LogOut className="h-4 w-4 mr-2" />
+                Se déconnecter
+              </Button>
+            </Card>
           </div>
         </div>
+
+        {/* Dialogue de confirmation */}
+        <ConfirmDialog
+          isOpen={confirmState.isOpen}
+          onClose={handleCancel}
+          onConfirm={handleConfirm}
+          title={confirmState.title}
+          message={confirmState.message}
+          confirmText={confirmState.confirmText}
+          cancelText={confirmState.cancelText}
+          variant={confirmState.variant}
+        />
       </div>
     </div>
   );
