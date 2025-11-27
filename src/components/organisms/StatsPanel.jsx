@@ -22,6 +22,7 @@ const StatsPanel = () => {
     if (user) {
       loadStats();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user]);
 
   const loadStats = async () => {

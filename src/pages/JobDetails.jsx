@@ -27,10 +27,12 @@ import Button from '../components/atoms/Button';
 import Tag from '../components/atoms/Tag';
 import Badge from '../components/atoms/Badge';
 import Card from '../components/ui/Card';
+import Modal from '../components/ui/Modal';
 import ConfirmDialog from '../components/ui/ConfirmDialog';
 import Textarea from '../components/atoms/Textarea';
 import FileUpload from '../components/molecules/FileUpload';
 import DocumentList from '../components/organisms/DocumentList';
+import JobForm from '../components/organisms/JobForm';
 import showToast from '../lib/toast';
 
 const JobDetails = () => {
@@ -45,6 +47,8 @@ const JobDetails = () => {
   const [loading, setLoading] = useState(true);
   const [notes, setNotes] = useState('');
   const [isSavingNotes, setIsSavingNotes] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   const { uploadFile, uploading, progress } = useFileUpload();
 
@@ -53,6 +57,7 @@ const JobDetails = () => {
       loadJobDetails();
       loadDocuments();
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id, user]);
 
   const loadJobDetails = async () => {
@@ -129,6 +134,32 @@ const JobDetails = () => {
     }
   };
 
+  const handleOpenEditModal = () => {
+    setIsEditModalOpen(true);
+  };
+
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+
+  const handleEditSubmit = async (jobData) => {
+    setIsSubmitting(true);
+    try {
+      const { data, error } = await jobsService.updateJob(job.id, jobData);
+
+      if (error) {
+        showToast.error('Erreur lors de la mise à jour');
+      } else {
+        showToast.success('Candidature mise à jour');
+        setJob({ ...job, ...data });
+        setNotes(data.notes || '');
+        handleCloseEditModal();
+      }
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
   const formatDate = (dateString) => {
     if (!dateString) return '-';
     try {
@@ -202,7 +233,7 @@ const JobDetails = () => {
               <Button
                 variant="ghost"
                 size="sm"
-                onClick={() => navigate(`/dashboard`)}
+                onClick={handleOpenEditModal}
               >
                 <Edit className="h-5 w-5" />
               </Button>
@@ -407,6 +438,21 @@ const JobDetails = () => {
             </Card>
           </div>
         </div>
+
+        {/* Modal de modification */}
+        <Modal
+          isOpen={isEditModalOpen}
+          onClose={handleCloseEditModal}
+          title="Modifier la candidature"
+          size="lg"
+        >
+          <JobForm
+            job={job}
+            onSubmit={handleEditSubmit}
+            onCancel={handleCloseEditModal}
+            loading={isSubmitting}
+          />
+        </Modal>
 
         {/* Dialogue de confirmation */}
         <ConfirmDialog
