@@ -80,12 +80,12 @@ const authService = {
   },
 
   /**
-   * Réinitialisation du mot de passe
+   * Demande de réinitialisation du mot de passe (envoie l'email)
    */
-  async resetPassword(email) {
+  async resetPasswordRequest(email) {
     try {
       const { data, error } = await supabase.auth.resetPasswordForEmail(email, {
-        redirectTo: `${window.location.origin}/auth/reset-password`,
+        redirectTo: `${window.location.origin}/reset-password`,
       });
 
       if (error) throw error;
