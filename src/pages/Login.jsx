@@ -95,7 +95,7 @@ const Login = () => {
             Connexion
           </h1>
           <p className="text-gray-600">
-            Connectez-vous à votre compte Job Tracker
+            Connectez-vous à votre compte JobFlow
           </p>
         </div>
 

@@ -1,6 +1,6 @@
-# 🚀 Guide de Déploiement - Job Tracker sur Coolify
+# 🚀 Guide de Déploiement - JobFlow sur Coolify
 
-Ce guide vous explique comment déployer votre application Job Tracker sur Coolify avec Docker.
+Ce guide vous explique comment déployer votre application JobFlow sur Coolify avec Docker.
 
 ## 📋 Prérequis
 
@@ -29,7 +29,7 @@ VITE_SUPABASE_ANON_KEY=votre_clé_publique_supabase
 
 ### Étape 2 : Configurer le dépôt
 
-- **Repository URL :** `https://github.com/VOTRE_USERNAME/job-tracker`
+- **Repository URL :** `https://github.com/VOTRE_USERNAME/jobflow`
 - **Branch :** `main`
 - **Build Pack :** Sélectionnez **"Dockerfile"**
 
@@ -71,10 +71,10 @@ Avant de déployer, vous pouvez tester localement :
 
 ```bash
 # Build l'image Docker
-docker build -t job-tracker .
+docker build -t jobflow .
 
 # Lancer le conteneur
-docker run -p 8080:80 job-tracker
+docker run -p 8080:80 jobflow
 
 # Accéder à l'application
 # http://localhost:8080

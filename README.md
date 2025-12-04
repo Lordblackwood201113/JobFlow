@@ -1,8 +1,8 @@
-# Job Tracker - Gestionnaire de Candidatures
+# JobFlow - Gestionnaire de Candidatures
 
 Application web moderne pour suivre et gérer vos candidatures d'emploi, construite avec React, Supabase et Tailwind CSS.
 
-![Job Tracker](https://img.shields.io/badge/version-1.0.0-blue.svg)
+![JobFlow](https://img.shields.io/badge/version-1.0.0-blue.svg)
 ![React](https://img.shields.io/badge/React-19.2.0-61dafb.svg)
 ![Supabase](https://img.shields.io/badge/Supabase-2.86.0-3ECF8E.svg)
 ![Tailwind](https://img.shields.io/badge/Tailwind-3.4.18-38B2AC.svg)
@@ -57,7 +57,7 @@ Application web moderne pour suivre et gérer vos candidatures d'emploi, constru
 1. Cloner le repository
 ```bash
 git clone <url-du-repo>
-cd job-tracker
+cd jobflow
 ```
 
 2. Installer les dépendances

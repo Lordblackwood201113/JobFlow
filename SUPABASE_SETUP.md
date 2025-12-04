@@ -1,6 +1,6 @@
 # Guide de Configuration Supabase
 
-Ce guide vous accompagne dans la configuration complète de Supabase pour le Job Tracker.
+Ce guide vous accompagne dans la configuration complète de Supabase pour JobFlow.
 
 ## 📋 Prérequis
 
@@ -15,7 +15,7 @@ Ce guide vous accompagne dans la configuration complète de Supabase pour le Job
 3. Connectez-vous ou créez un compte
 4. Cliquez sur "New Project"
 5. Remplissez les informations :
-   - **Name:** Job Tracker
+   - **Name:** JobFlow
    - **Database Password:** Choisissez un mot de passe fort (notez-le !)
    - **Region:** Choisissez la région la plus proche (Europe West pour la France)
    - **Plan:** Free

@@ -55,7 +55,7 @@ const Landing = () => {
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2">
               <Briefcase className="h-8 w-8 text-gray-900" />
-              <span className="text-2xl font-bold text-gray-900">Job Tracker</span>
+              <span className="text-2xl font-bold text-gray-900">JobFlow</span>
             </div>
             <div className="flex items-center gap-4">
               <Button
@@ -174,7 +174,7 @@ const Landing = () => {
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <div>
               <h2 className="text-4xl md:text-5xl font-bold text-gray-900 mb-6">
-                Pourquoi Job Tracker ?
+                Pourquoi JobFlow ?
               </h2>
               <div className="space-y-4">
                 {[
@@ -206,7 +206,7 @@ const Landing = () => {
             Prêt à organiser votre recherche d'emploi ?
           </h2>
           <p className="text-xl text-white/90 mb-10 max-w-2xl mx-auto">
-            Rejoignez des centaines de chercheurs d'emploi qui utilisent Job Tracker
+            Rejoignez des centaines de chercheurs d'emploi qui utilisent JobFlow
             pour trouver leur prochain poste.
           </p>
           <Button
@@ -228,12 +228,12 @@ const Landing = () => {
             <div className="flex items-center gap-2">
               <Briefcase className="h-6 w-6 text-gray-900" />
               <span className="text-lg font-semibold text-gray-900">
-                Job Tracker
+                JobFlow
               </span>
             </div>
 
             <p className="text-sm text-gray-600">
-              © 2025 Job Tracker. Tous droits réservés.
+              © 2025 JobFlow. Tous droits réservés.
             </p>
 
             <div className="flex items-center gap-6">

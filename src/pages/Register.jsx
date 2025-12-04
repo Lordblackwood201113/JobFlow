@@ -117,7 +117,7 @@ const Register = () => {
             Inscription
           </h1>
           <p className="text-gray-600">
-            Créez votre compte Job Tracker gratuitement
+            Créez votre compte JobFlow gratuitement
           </p>
         </div>
 

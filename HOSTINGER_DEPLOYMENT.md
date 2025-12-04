@@ -1,6 +1,6 @@
 # Guide de Déploiement sur Hostinger
 
-Ce guide vous explique comment déployer votre application Job Tracker sur Hostinger.
+Ce guide vous explique comment déployer votre application JobFlow sur Hostinger.
 
 ## Prérequis
 
@@ -17,7 +17,7 @@ Créez un fichier `.env.production` à la racine du projet :
 ```env
 VITE_SUPABASE_URL=https://fexwxyhxsjmnvfketvks.supabase.co
 VITE_SUPABASE_ANON_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImZleHd4eWh4c2ptbnZma2V0dmtzIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NjQxMjY2ODEsImV4cCI6MjA3OTcwMjY4MX0.KhIPorJHwYcxQ7NDPUIld_-YUs0l8agLGcyXmKCShis
-VITE_APP_NAME=Job Tracker
+VITE_APP_NAME=JobFlow
 VITE_MAX_FILE_SIZE=5242880
 ```
 
@@ -26,7 +26,7 @@ VITE_MAX_FILE_SIZE=5242880
 Dans le terminal, exécutez :
 
 ```bash
-cd job-tracker
+cd jobflow
 npm run build
 ```
 
@@ -258,4 +258,4 @@ Si vous rencontrez des problèmes :
 
 ---
 
-**Félicitations !** 🎉 Votre application Job Tracker est maintenant déployée sur Hostinger !
+**Félicitations !** 🎉 Votre application JobFlow est maintenant déployée sur Hostinger !

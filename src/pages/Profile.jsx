@@ -329,7 +329,7 @@ const Profile = () => {
               </h2>
 
               <p className="text-gray-600 mb-4">
-                Déconnectez-vous de votre compte Job Tracker
+                Déconnectez-vous de votre compte JobFlow
               </p>
 
               <Button

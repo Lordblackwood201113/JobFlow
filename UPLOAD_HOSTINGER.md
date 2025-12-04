@@ -1,4 +1,4 @@
-# Guide d'Upload sur Hostinger - Job Tracker
+# Guide d'Upload sur Hostinger - JobFlow
 
 ## Problème identifié
 Le dossier `dist` a été uploadé au lieu de son contenu. Les fichiers doivent être directement dans `public_html`.
@@ -8,20 +8,20 @@ Le dossier `dist` a été uploadé au lieu de son contenu. Les fichiers doivent 
 ### Option 1 : Créer un ZIP
 
 1. **Sur votre ordinateur :**
-   - Allez dans : `C:\Users\ADMIN\Desktop\Cursor_project\job-tracker\dist`
+   - Allez dans : `C:\Users\ADMIN\Desktop\Cursor_project\jobflow\dist`
    - Sélectionnez TOUT le contenu :
      - `.htaccess`
      - `index.html`
      - `vite.svg`
      - Dossier `assets/`
    - Clic droit → **Envoyer vers** → **Dossier compressé (ZIP)**
-   - Nommez-le `job-tracker.zip`
+   - Nommez-le `jobflow.zip`
 
 2. **Dans Hostinger File Manager :**
    - Allez dans `public_html`
    - Supprimez tout ce qui s'y trouve
    - Cliquez sur **Upload Files**
-   - Uploadez `job-tracker.zip`
+   - Uploadez `jobflow.zip`
    - Une fois uploadé, clic droit sur le fichier ZIP → **Extract** (Extraire)
    - Supprimez le fichier ZIP après extraction
 
@@ -70,7 +70,7 @@ Si vous préférez utiliser FTP (plus fiable) :
    - Cliquez sur **Connexion**
 
 4. **Uploadez les fichiers :**
-   - **Côté gauche** (local) : Naviguez vers `C:\Users\ADMIN\Desktop\Cursor_project\job-tracker\dist`
+   - **Côté gauche** (local) : Naviguez vers `C:\Users\ADMIN\Desktop\Cursor_project\jobflow\dist`
    - **Côté droit** (serveur) : Naviguez vers `/public_html` et SUPPRIMEZ tout
    - **Sélectionnez TOUT** le contenu de dist (côté gauche)
    - **Glissez-déposez** vers public_html (côté droit)

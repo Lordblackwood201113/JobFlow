@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  job-tracker:
+  jobflow:
     build:
       context: .
       dockerfile: Dockerfile
@@ -13,7 +13,7 @@ services:
       - VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
       - VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY}
     restart: unless-stopped
-    container_name: job-tracker-app
+    container_name: jobflow-app
 
 # Pour utiliser ce fichier avec vos variables d'environnement:
 # 1. Créez un fichier .env.production à la racine avec vos variables

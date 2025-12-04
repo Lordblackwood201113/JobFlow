@@ -1,4 +1,4 @@
-# 🏗️ Guide de Build et Test - Job Tracker
+# 🏗️ Guide de Build et Test - JobFlow
 
 Ce guide vous aide à builder et tester votre application avant le déploiement.
 
@@ -32,10 +32,10 @@ Accédez à `http://localhost:4173` pour tester.
 
 ```bash
 # Build l'image Docker
-docker build -t job-tracker:latest .
+docker build -t jobflow:latest .
 
 # Lancer le conteneur
-docker run -p 8080:80 job-tracker:latest
+docker run -p 8080:80 jobflow:latest
 
 # Tester dans le navigateur
 # http://localhost:8080
@@ -139,7 +139,7 @@ npm run build
 
 **Rebuild complet :**
 ```bash
-docker build --no-cache -t job-tracker:latest .
+docker build --no-cache -t jobflow:latest .
 ```
 
 ### L'application ne se connecte pas à Supabase
