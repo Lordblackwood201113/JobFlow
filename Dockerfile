@@ -9,8 +9,8 @@ WORKDIR /app
 # Copier les fichiers de dépendances
 COPY package*.json ./
 
-# Installer TOUTES les dépendances (nécessaire pour le build Vite)
-RUN npm ci
+# Installer les dépendances avec fallback
+RUN if [ -f package-lock.json ]; then npm ci; else npm install; fi
 
 # Copier tout le code source
 COPY . .
