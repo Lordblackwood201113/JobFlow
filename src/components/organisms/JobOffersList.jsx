@@ -15,10 +15,19 @@ const JobOffersList = () => {
   const [offers, setOffers] = useState([]);
   const [loading, setLoading] = useState(true);
   const [importingId, setImportingId] = useState(null);
+  
+  // Pagination state
+  const [currentPage, setCurrentPage] = useState(1);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     loadOffers();
   }, []);
+
+  // Reset pagination when offers change
+  useEffect(() => {
+    setCurrentPage(1);
+  }, [offers]);
 
   const loadOffers = async () => {
     setLoading(true);
@@ -78,10 +87,21 @@ const JobOffersList = () => {
     );
   }
 
+  // Pagination calculations
+  const totalPages = Math.ceil(offers.length / itemsPerPage);
+  const indexOfLastOffer = currentPage * itemsPerPage;
+  const indexOfFirstOffer = indexOfLastOffer - itemsPerPage;
+  const currentOffers = offers.slice(indexOfFirstOffer, indexOfLastOffer);
+
+  const handlePageChange = (pageNumber) => {
+    setCurrentPage(pageNumber);
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
+
   return (
     <div className="space-y-6">
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          {offers.map((offer) => (
+          {currentOffers.map((offer) => (
             <Card 
               key={offer.id} 
               className="flex flex-col h-full hover:shadow-md transition-shadow"
@@ -205,6 +225,66 @@ const JobOffersList = () => {
             </Card>
           ))}
       </div>
+
+      {totalPages > 1 && (
+        <div className="flex justify-center items-center space-x-2 mt-8 pb-4">
+          <button
+            onClick={() => handlePageChange(currentPage - 1)}
+            disabled={currentPage === 1}
+            className={`px-4 py-2 rounded-md border ${
+              currentPage === 1
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                : 'bg-white text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            Précédent
+          </button>
+          
+          <div className="flex space-x-1">
+            {[...Array(totalPages)].map((_, index) => {
+              const pageNumber = index + 1;
+              // Show first, last, current, and adjacent pages
+              if (
+                pageNumber === 1 ||
+                pageNumber === totalPages ||
+                (pageNumber >= currentPage - 1 && pageNumber <= currentPage + 1)
+              ) {
+                return (
+                  <button
+                    key={pageNumber}
+                    onClick={() => handlePageChange(pageNumber)}
+                    className={`w-10 h-10 rounded-md flex items-center justify-center border ${
+                      currentPage === pageNumber
+                        ? 'bg-blue-600 text-white border-blue-600'
+                        : 'bg-white text-gray-700 hover:bg-gray-50'
+                    }`}
+                  >
+                    {pageNumber}
+                  </button>
+                );
+              } else if (
+                pageNumber === currentPage - 2 ||
+                pageNumber === currentPage + 2
+              ) {
+                return <span key={pageNumber} className="px-2 text-gray-400">...</span>;
+              }
+              return null;
+            })}
+          </div>
+
+          <button
+            onClick={() => handlePageChange(currentPage + 1)}
+            disabled={currentPage === totalPages}
+            className={`px-4 py-2 rounded-md border ${
+              currentPage === totalPages
+                ? 'bg-gray-100 text-gray-400 cursor-not-allowed'
+                : 'bg-white text-gray-700 hover:bg-gray-50'
+            }`}
+          >
+            Suivant
+          </button>
+        </div>
+      )}
     </div>
   );
 };
