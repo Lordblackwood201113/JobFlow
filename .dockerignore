@@ -1,0 +1,61 @@
+# Dépendances
+node_modules
+npm-debug.log
+yarn-error.log
+package-lock.json
+yarn.lock
+
+# Build et cache
+dist
+dist-ssr
+*.local
+.cache
+.vite
+
+# Tests
+coverage
+.nyc_output
+
+# Environment variables (ne jamais inclure dans Docker)
+.env
+.env.local
+.env.development
+.env.production
+.env.test
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Git
+.git
+.gitignore
+.gitattributes
+
+# Documentation
+README.md
+*.md
+docs
+
+# CI/CD
+.github
+.gitlab-ci.yml
+
+# Logs
+logs
+*.log
+
+# Fichiers temporaires
+tmp
+temp
+*.tmp
+
+# Docker
+Dockerfile
+.dockerignore
+docker-compose*.yml
+

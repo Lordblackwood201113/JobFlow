@@ -1,0 +1,22 @@
+version: '3.8'
+
+services:
+  job-tracker:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    environment:
+      # Variables d'environnement Supabase
+      # ⚠️ Remplacez par vos vraies valeurs ou créez un fichier .env.production
+      - VITE_SUPABASE_URL=${VITE_SUPABASE_URL}
+      - VITE_SUPABASE_ANON_KEY=${VITE_SUPABASE_ANON_KEY}
+    restart: unless-stopped
+    container_name: job-tracker-app
+
+# Pour utiliser ce fichier avec vos variables d'environnement:
+# 1. Créez un fichier .env.production à la racine avec vos variables
+# 2. Lancez: docker-compose up -d
+# 3. Accédez à: http://localhost:8080
+
