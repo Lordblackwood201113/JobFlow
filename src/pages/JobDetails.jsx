@@ -15,8 +15,7 @@ import {
   ExternalLink,
   Star,
 } from 'lucide-react';
-import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import { formatDate } from '../utils/dateUtils';
 import { useAuth } from '../context/AuthContext';
 import { useJobs } from '../context/JobsContext';
 import jobsService from '../services/jobsService';
@@ -160,15 +159,6 @@ const JobDetails = () => {
     }
   };
 
-  const formatDate = (dateString) => {
-    if (!dateString) return '-';
-    try {
-      return format(new Date(dateString), 'dd MMMM yyyy', { locale: fr });
-    } catch {
-      return dateString;
-    }
-  };
-
   const workTypeLabels = {
     remote: 'Télétravail',
     hybrid: 'Hybride',
@@ -278,7 +268,7 @@ const JobDetails = () => {
                 <div className="flex items-center gap-3">
                   <Calendar className="h-5 w-5 text-gray-400" />
                   <span className="text-gray-700">
-                    Postulé le {formatDate(job.date_applied)}
+                    Postulé le {formatDate(job.date_applied, { day: 'numeric', month: 'long', year: 'numeric' })}
                   </span>
                 </div>
 
@@ -286,7 +276,7 @@ const JobDetails = () => {
                   <div className="flex items-center gap-3">
                     <Calendar className="h-5 w-5 text-purple-400" />
                     <span className="text-gray-700">
-                      Entretien prévu le {formatDate(job.date_interview)}
+                      Entretien prévu le {formatDate(job.date_interview, { day: 'numeric', month: 'long', year: 'numeric' })}
                     </span>
                   </div>
                 )}

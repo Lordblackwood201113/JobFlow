@@ -45,40 +45,45 @@ export const AuthProvider = ({ children }) => {
     // Écouter les changements d'authentification
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, currentSession) => {
-        console.log('Auth state changed:', event);
+        // Gérer les événements d'authentification de manière sélective
+        switch (event) {
+          case 'SIGNED_OUT':
+            setSession(null);
+            setUser(null);
+            setProfile(null);
+            setLoading(false);
+            break;
+            
+          case 'SIGNED_IN':
+          case 'TOKEN_REFRESHED':
+            setSession(currentSession);
+            setUser(currentSession?.user ?? null);
+            if (currentSession?.user) {
+               // On vérifie si l'ID a changé pour éviter de recharger le profil inutilement
+               if (!profile || profile.id !== currentSession.user.id) {
+                  try {
+                    const { data: profileData } = await authService.getProfile(currentSession.user.id);
+                    setProfile(profileData);
+                  } catch (error) {
+                    console.error('Erreur lors du chargement du profil:', error);
+                  }
+               }
+            }
+            setLoading(false);
+            break;
+            
+          case 'INITIAL_SESSION':
+            // Déjà géré par initializeAuth, on ignore pour éviter double appel
+            break;
 
-        // Gérer les erreurs de refresh token
-        if (event === 'TOKEN_REFRESHED') {
-          console.log('Token refreshed successfully');
-        } else if (event === 'SIGNED_OUT') {
-          console.log('User signed out');
-          setSession(null);
-          setUser(null);
-          setProfile(null);
-          setLoading(false);
-          return;
-        } else if (event === 'USER_UPDATED') {
-          console.log('User updated');
+          default:
+            // Pour les autres événements (USER_UPDATED, PASSWORD_RECOVERY, etc.)
+            if (currentSession) {
+               setSession(currentSession);
+               setUser(currentSession.user);
+            }
+            break;
         }
-
-        setSession(currentSession);
-        setUser(currentSession?.user ?? null);
-
-        if (currentSession?.user) {
-          // Charger le profil utilisateur
-          try {
-            const { data: profileData } = await authService.getProfile(
-              currentSession.user.id
-            );
-            setProfile(profileData);
-          } catch (error) {
-            console.error('Erreur lors du chargement du profil:', error);
-          }
-        } else {
-          setProfile(null);
-        }
-
-        setLoading(false);
       }
     );
 

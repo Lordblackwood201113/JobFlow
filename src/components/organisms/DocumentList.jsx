@@ -1,6 +1,5 @@
 import { FileText, Download, Trash2, FileCheck } from 'lucide-react';
-import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
+import { formatDate } from '../../utils/dateUtils';
 import Button from '../atoms/Button';
 import Badge from '../atoms/Badge';
 import ConfirmDialog from '../ui/ConfirmDialog';
@@ -16,14 +15,6 @@ const DocumentList = ({ documents, onDocumentDeleted }) => {
     const sizes = ['Bytes', 'KB', 'MB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return Math.round((bytes / Math.pow(k, i)) * 100) / 100 + ' ' + sizes[i];
-  };
-
-  const formatDate = (dateString) => {
-    try {
-      return format(new Date(dateString), 'dd MMM yyyy à HH:mm', { locale: fr });
-    } catch {
-      return dateString;
-    }
   };
 
   const getFileIcon = (mimeType) => {
@@ -122,7 +113,7 @@ const DocumentList = ({ documents, onDocumentDeleted }) => {
             <div className="flex items-center gap-3 text-xs text-gray-500">
               <span>{formatFileSize(document.file_size)}</span>
               <span>•</span>
-              <span>{formatDate(document.uploaded_at)}</span>
+              <span>{formatDate(document.uploaded_at, { day: 'numeric', month: 'short', year: 'numeric', hour: '2-digit', minute: '2-digit' })}</span>
             </div>
           </div>
 

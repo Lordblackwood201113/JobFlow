@@ -33,7 +33,8 @@ class ErrorBoundary extends Component {
 
   handleReset = () => {
     this.setState({ hasError: false, error: null, errorInfo: null });
-    window.location.href = '/';
+    // Utiliser replace pour ne pas garder l'historique de l'erreur
+    window.location.replace('/');
   };
 
   render() {

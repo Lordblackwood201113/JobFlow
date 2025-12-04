@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { getTodayString } from '../../utils/dateUtils';
 import Input from '../atoms/Input';
 import Select from '../atoms/Select';
 import Textarea from '../atoms/Textarea';
@@ -13,7 +14,7 @@ const JobForm = ({ job, onSubmit, onCancel, loading }) => {
     work_type: '',
     contract_type: '',
     status: 'Brouillon',
-    date_applied: new Date().toISOString().split('T')[0],
+    date_applied: getTodayString(),
     date_interview: '',
     date_response: '',
     salary_min: '',
@@ -41,7 +42,7 @@ const JobForm = ({ job, onSubmit, onCancel, loading }) => {
         work_type: job.work_type || '',
         contract_type: job.contract_type || '',
         status: job.status || 'Brouillon',
-        date_applied: job.date_applied || new Date().toISOString().split('T')[0],
+        date_applied: job.date_applied || getTodayString(),
         date_interview: job.date_interview || '',
         date_response: job.date_response || '',
         salary_min: job.salary_min || '',

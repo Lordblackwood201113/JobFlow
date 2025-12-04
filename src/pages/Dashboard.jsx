@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { Plus, Send, Briefcase, CheckCircle, Filter, X, FileText, BarChart3, Briefcase as BriefcaseIcon } from 'lucide-react';
+import { Plus, Send, Briefcase, CheckCircle, Filter, X, FileText, BarChart3, Briefcase as BriefcaseIcon, Globe } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 import { useJobs } from '../context/JobsContext';
 import useConfirm from '../hooks/useConfirm';
@@ -14,6 +14,7 @@ import UserMenu from '../components/molecules/UserMenu';
 import JobList from '../components/organisms/JobList';
 import JobForm from '../components/organisms/JobForm';
 import StatsPanel from '../components/organisms/StatsPanel';
+import JobOffersList from '../components/organisms/JobOffersList';
 
 const Dashboard = () => {
   const { user, profile, signOut } = useAuth();
@@ -148,6 +149,17 @@ const Dashboard = () => {
                 <BarChart3 className="h-5 w-5" />
                 Statistiques avancées
               </button>
+              <button
+                onClick={() => setActiveTab('offers')}
+                className={`${
+                  activeTab === 'offers'
+                    ? 'border-[#DBEAFE] text-gray-900'
+                    : 'border-transparent text-gray-500 hover:text-gray-700 hover:border-gray-300'
+                } whitespace-nowrap py-4 px-1 border-b-2 font-medium text-sm flex items-center gap-2`}
+              >
+                <Globe className="h-5 w-5" />
+                Nouvelles Offres
+              </button>
             </nav>
           </div>
         </div>
@@ -227,9 +239,12 @@ const Dashboard = () => {
               onToggleFavorite={toggleFavorite}
             />
           </>
-        ) : (
+        ) : activeTab === 'stats' ? (
           /* Panneau de statistiques avancées */
           <StatsPanel />
+        ) : (
+          /* Liste des nouvelles offres */
+          <JobOffersList />
         )}
 
         {/* Modal de création/édition */}

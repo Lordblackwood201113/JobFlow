@@ -1,7 +1,6 @@
 import { MapPin, Calendar, Briefcase, Star, Trash2, Edit, ExternalLink, Eye } from 'lucide-react';
-import { format } from 'date-fns';
-import { fr } from 'date-fns/locale';
 import { useNavigate } from 'react-router-dom';
+import { formatDate } from '../../utils/dateUtils';
 import Card from '../ui/Card';
 import Tag from '../atoms/Tag';
 import Button from '../atoms/Button';
@@ -9,13 +8,6 @@ import Badge from '../atoms/Badge';
 
 const JobCard = ({ job, onEdit, onDelete, onToggleFavorite }) => {
   const navigate = useNavigate();
-  const formatDate = (dateString) => {
-    try {
-      return format(new Date(dateString), 'dd MMM yyyy', { locale: fr });
-    } catch {
-      return dateString;
-    }
-  };
 
   const workTypeLabels = {
     remote: 'Télétravail',
@@ -57,7 +49,7 @@ const JobCard = ({ job, onEdit, onDelete, onToggleFavorite }) => {
 
         <div className="flex items-center gap-2 text-sm text-gray-600">
           <Calendar className="h-4 w-4" />
-          <span>Postulé le {formatDate(job.date_applied)}</span>
+          <span>Postulé le {formatDate(job.date_applied, { day: '2-digit', month: 'short', year: 'numeric' })}</span>
         </div>
       </div>
 

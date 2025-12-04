@@ -87,7 +87,7 @@ const statsService = {
         .select('date_applied, status')
         .eq('user_id', userId)
         .eq('is_archived', false)
-        .gte('date_applied', startDate.toISOString().split('T')[0])
+        .gte('date_applied', format(startDate, 'yyyy-MM-dd'))
         .order('date_applied', { ascending: true });
 
       if (error) throw error;
