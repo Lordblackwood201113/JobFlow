@@ -55,13 +55,13 @@ const Modal = ({
       />
 
       {/* Modal */}
-      <div className="flex min-h-full items-center justify-center p-4">
+      <div className="flex min-h-full items-center justify-center p-2 sm:p-4">
         <div
-          className={`relative bg-white rounded-[24px] shadow-xl ${sizes[size]} w-full max-h-[90vh] flex flex-col animate-scale-in`}
+          className={`relative bg-white rounded-xl sm:rounded-[24px] shadow-xl ${sizes[size]} w-full max-h-[95vh] sm:max-h-[90vh] flex flex-col animate-scale-in`}
           onClick={(e) => e.stopPropagation()}
         >
           {/* Header */}
-          <div className="flex items-center justify-between p-6 border-b">
+          <div className="flex items-center justify-between p-4 sm:p-6 border-b">
             <h2 id="modal-title" className="text-xl font-bold text-gray-900">{title}</h2>
             {showCloseButton && (
               <button

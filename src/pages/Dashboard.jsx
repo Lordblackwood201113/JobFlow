@@ -125,7 +125,24 @@ const Dashboard = () => {
 
         {/* Onglets */}
         <div className="mb-6">
-          <div className="border-b border-gray-200">
+          {/* Select pour mobile */}
+          <div className="sm:hidden">
+            <label htmlFor="tabs" className="sr-only">Sélectionner une vue</label>
+            <select
+              id="tabs"
+              name="tabs"
+              className="block w-full rounded-md border-gray-300 focus:border-blue-500 focus:ring-blue-500 py-2 px-3 shadow-sm text-base"
+              value={activeTab}
+              onChange={(e) => setActiveTab(e.target.value)}
+            >
+              <option value="applications">Candidatures</option>
+              <option value="stats">Statistiques avancées</option>
+              <option value="offers">Nouvelles Offres</option>
+            </select>
+          </div>
+
+          {/* Tabs classiques pour desktop */}
+          <div className="hidden sm:block border-b border-gray-200">
             <nav className="-mb-px flex space-x-8">
               <button
                 onClick={() => setActiveTab('applications')}
@@ -202,27 +219,30 @@ const Dashboard = () => {
           <>
             {/* Recherche et Filtres */}
             <div className="mb-6 space-y-4">
-              <div className="flex items-center gap-3">
-                <div className="flex-1">
+              <div className="flex flex-col md:flex-row md:items-center gap-3">
+                <div className="flex-1 w-full">
                   <SearchBar
                     value={searchTerm}
                     onChange={handleSearchChange}
                     placeholder="Rechercher par entreprise ou poste..."
                   />
                 </div>
-                <Button
-                  variant="outline"
-                  onClick={() => setShowFilters(!showFilters)}
-                >
-                  <Filter className="h-5 w-5 mr-2" />
-                  Filtres
-                </Button>
-                {(filters.status || filters.contractType || filters.workType || filters.favorites) && (
-                  <Button variant="ghost" onClick={handleResetFilters}>
-                    <X className="h-5 w-5 mr-2" />
-                    Réinitialiser
+                <div className="flex items-center gap-2 overflow-x-auto pb-1 md:pb-0">
+                  <Button
+                    variant="outline"
+                    onClick={() => setShowFilters(!showFilters)}
+                    className="whitespace-nowrap"
+                  >
+                    <Filter className="h-5 w-5 mr-2" />
+                    Filtres
                   </Button>
-                )}
+                  {(filters.status || filters.contractType || filters.workType || filters.favorites) && (
+                    <Button variant="ghost" onClick={handleResetFilters} className="whitespace-nowrap">
+                      <X className="h-5 w-5 mr-2" />
+                      Réinitialiser
+                    </Button>
+                  )}
+                </div>
               </div>
 
               {showFilters && (
