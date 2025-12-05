@@ -19,10 +19,25 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    let mounted = true;
+
     // Récupérer la session au chargement
     const initializeAuth = async () => {
       try {
-        const { session: currentSession } = await authService.getSession();
+        // Timeout de 5s pour éviter le blocage si localStorage est corrompu
+        const timeoutPromise = new Promise((resolve) => 
+          setTimeout(() => resolve({ session: null, error: 'Timeout' }), 5000)
+        );
+        
+        const sessionPromise = authService.getSession();
+        
+        const { session: currentSession } = await Promise.race([
+          sessionPromise,
+          timeoutPromise
+        ]);
+
+        if (!mounted) return;
+
         setSession(currentSession);
         setUser(currentSession?.user ?? null);
 
@@ -31,12 +46,12 @@ export const AuthProvider = ({ children }) => {
           const { data: profileData } = await authService.getProfile(
             currentSession.user.id
           );
-          setProfile(profileData);
+          if (mounted) setProfile(profileData);
         }
       } catch (error) {
         console.error('Erreur d\'initialisation de l\'authentification:', error);
       } finally {
-        setLoading(false);
+        if (mounted) setLoading(false);
       }
     };
 
@@ -45,6 +60,8 @@ export const AuthProvider = ({ children }) => {
     // Écouter les changements d'authentification
     const { data: { subscription } } = supabase.auth.onAuthStateChange(
       async (event, currentSession) => {
+        if (!mounted) return;
+
         // Gérer les événements d'authentification de manière sélective
         switch (event) {
           case 'SIGNED_OUT':
@@ -59,21 +76,19 @@ export const AuthProvider = ({ children }) => {
             setSession(currentSession);
             setUser(currentSession?.user ?? null);
             if (currentSession?.user) {
-               // On vérifie si l'ID a changé pour éviter de recharger le profil inutilement
-               if (!profile || profile.id !== currentSession.user.id) {
-                  try {
-                    const { data: profileData } = await authService.getProfile(currentSession.user.id);
-                    setProfile(profileData);
-                  } catch (error) {
-                    console.error('Erreur lors du chargement du profil:', error);
-                  }
+               try {
+                 const { data: profileData } = await authService.getProfile(currentSession.user.id);
+                 if (mounted) setProfile(profileData);
+               } catch (error) {
+                 console.error('Erreur lors du chargement du profil:', error);
                }
             }
             setLoading(false);
             break;
             
           case 'INITIAL_SESSION':
-            // Déjà géré par initializeAuth, on ignore pour éviter double appel
+            // Sécurité : on s'assure que le loading s'arrête
+            setLoading(false);
             break;
 
           default:
@@ -88,6 +103,7 @@ export const AuthProvider = ({ children }) => {
     );
 
     return () => {
+      mounted = false;
       subscription?.unsubscribe();
     };
   }, []);
